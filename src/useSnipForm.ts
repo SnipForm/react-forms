@@ -1,0 +1,449 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
+import { DEFAULT_API_BASE, initSession, submitSession, validateSession } from './api';
+import { InteractionTracker } from './behavior';
+import { SnipFormError } from './types';
+import type {
+  FieldErrors,
+  FieldProps,
+  FieldType,
+  FieldValue,
+  Fields,
+  FormProps,
+  GateReason,
+  HoneypotProps,
+  RegisterOptions,
+  Session,
+  SnipFormHandle,
+  SnipFormOptions,
+  Status,
+  SubmitSuccess,
+} from './types';
+
+const BLUR_VALIDATE_DELAY_MS = 250;
+
+/**
+ * The whole form, as React state.
+ *
+ *   const form = useSnipForm({
+ *     key: 'FORM_KEY',
+ *     fields: {
+ *       email: { type: 'email', rules: { required: 'Email is required', email: null } },
+ *       plan:  { type: 'select' },
+ *     },
+ *   });
+ *
+ *   <SnipForm form={form}>
+ *     <input {...form.register('email')} />
+ *     <FieldError form={form} name="email" />
+ *     <button disabled={!form.isReady}>Send</button>
+ *   </SnipForm>
+ *
+ * Lifecycle: idle -> (first human interaction) initializing -> ready ->
+ * submitting -> success | ready (validation errors) | error (recoverable).
+ * `fatal` means the form can't run at all (bad key, unpublished, domain).
+ */
+export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
+  const apiBase = options.apiBase ?? DEFAULT_API_BASE;
+  const fields = options.fields;
+
+  const [values, setValues] = useState<Record<string, FieldValue>>(() => initialValues(fields));
+  const [errors, setErrors] = useState<FieldErrors>({});
+  const [status, setStatus] = useState<Status>('idle');
+  const [fatal, setFatal] = useState<string | null>(null);
+  const [error, setError] = useState<SnipFormError | null>(null);
+  const [success, setSuccess] = useState<SubmitSuccess | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
+
+  const formRef = useRef<HTMLFormElement>(null);
+  const tracker = useRef(new InteractionTracker()).current;
+  const valuesRef = useRef(values);
+  valuesRef.current = values;
+  const sessionRef = useRef(session);
+  sessionRef.current = session;
+  const statusRef = useRef(status);
+  statusRef.current = status;
+  const initPromise = useRef<Promise<Session | null> | null>(null);
+  const blurTimers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
+
+  // -----------------------------------------------
+  // Session
+  // -----------------------------------------------
+
+  const init = useCallback((): Promise<Session | null> => {
+    if (initPromise.current) {
+      return initPromise.current;
+    }
+    setStatus('initializing');
+    initPromise.current = initSession(apiBase, options.key, fields)
+      .then((opened) => {
+        setSession(opened);
+        setStatus('ready');
+
+        return opened;
+      })
+      .catch((cause: unknown) => {
+        const failure = cause instanceof SnipFormError ? cause : new SnipFormError(String(cause), 'fatal');
+        if (failure.kind === 'fatal') {
+          setFatal(failure.message);
+          setStatus('fatal');
+        } else {
+          setError(failure);
+          setStatus('error');
+        }
+        options.onError?.(failure);
+
+        return null;
+      })
+      .finally(() => {
+        initPromise.current = null;
+      });
+
+    return initPromise.current;
+  }, [apiBase, options.key, fields, options.onError]);
+
+  const openGate = useCallback(
+    (reason: GateReason): void => {
+      tracker.openGate(reason);
+    },
+    [tracker],
+  );
+
+  // The gate opening is what starts the session (unless initOn: 'mount').
+  useEffect(() => {
+    tracker.listen();
+    tracker.onGateOpen(() => {
+      if (statusRef.current === 'idle' && options.initOn !== 'mount') {
+        void init();
+      }
+    });
+    if (options.initOn === 'mount') {
+      void init();
+    }
+
+    return () => tracker.stop();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Visible in the viewport counts as a human signal too.
+  useEffect(() => {
+    const element = formRef.current;
+    if (!element || typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          openGate('visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1, rootMargin: '50px' },
+    );
+    observer.observe(element);
+
+    return () => observer.disconnect();
+  }, [openGate]);
+
+  // -----------------------------------------------
+  // Values
+  // -----------------------------------------------
+
+  const setValue = useCallback(
+    (name: string, value: FieldValue): void => {
+      tracker.touch(name);
+      setValues((current) => ({ ...current, [name]: value }));
+    },
+    [tracker],
+  );
+
+  const wireMap = useMemo(() => {
+    const map: Record<string, FieldType> = {};
+    for (const [name, config] of Object.entries(fields)) {
+      map[name] = config.type ?? 'text';
+    }
+
+    return map;
+  }, [fields]);
+
+  const wirePayload = useCallback(
+    (live: Session): { map: Record<string, FieldType>; data: Record<string, FieldValue> } => {
+      const map = { ...wireMap };
+      const data: Record<string, FieldValue> = { ...valuesRef.current };
+      if (live.honeypot) {
+        map[live.honeypot] = 'textarea';
+        data[live.honeypot] = '';
+      }
+
+      return { map, data };
+    },
+    [wireMap],
+  );
+
+  // -----------------------------------------------
+  // Validate (server-true, nothing consumed)
+  // -----------------------------------------------
+
+  const validate = useCallback(
+    async (field?: string): Promise<FieldErrors> => {
+      const live = sessionRef.current;
+      if (!live) {
+        return {};
+      }
+      const { map, data } = wirePayload(live);
+      try {
+        const found = await validateSession(apiBase, live.token, map, data);
+        setErrors((current) => {
+          if (!field) {
+            return found;
+          }
+          const next = { ...current };
+          if (found[field]) {
+            next[field] = found[field];
+          } else {
+            delete next[field];
+          }
+
+          return next;
+        });
+
+        return found;
+      } catch (cause) {
+        // Validation is advisory - never surface its transport failures.
+        if (cause instanceof SnipFormError && cause.kind === 'expired') {
+          setSession(null);
+          setStatus('idle');
+          void init();
+        }
+
+        return {};
+      }
+    },
+    [apiBase, init, wirePayload],
+  );
+
+  const scheduleBlurValidation = useCallback(
+    (name: string): void => {
+      if (options.validateOn !== 'blur') {
+        return;
+      }
+      clearTimeout(blurTimers.current[name]);
+      blurTimers.current[name] = setTimeout(() => {
+        void validate(name);
+      }, BLUR_VALIDATE_DELAY_MS);
+    },
+    [options.validateOn, validate],
+  );
+
+  // -----------------------------------------------
+  // Submit
+  // -----------------------------------------------
+
+  const submit = useCallback(async (): Promise<void> => {
+    if (statusRef.current === 'submitting' || statusRef.current === 'fatal') {
+      return;
+    }
+    openGate('click');
+
+    let live = sessionRef.current ?? (await init());
+    if (!live) {
+      return;
+    }
+
+    setStatus('submitting');
+    setError(null);
+
+    const attempt = async (current: Session, retried: boolean): Promise<void> => {
+      const { map, data } = wirePayload(current);
+      try {
+        const outcome = await submitSession(apiBase, current.token, map, data, tracker.payload());
+        if (!outcome.validated) {
+          setErrors(outcome.errors);
+          setStatus('ready');
+          options.onValidationError?.(outcome.errors);
+
+          return;
+        }
+        const result: SubmitSuccess = { html: outcome.html, values: { ...valuesRef.current } };
+        setErrors({});
+        setSuccess(result);
+        setSession(null);
+        setStatus('success');
+        options.onSuccess?.(result);
+      } catch (cause) {
+        const failure = cause instanceof SnipFormError ? cause : new SnipFormError(String(cause), 'server');
+
+        // Expired / consumed / IP changed: open a fresh session and try once more.
+        if (failure.kind === 'expired' && !retried) {
+          setSession(null);
+          live = await init();
+          if (live) {
+            return attempt(live, true);
+          }
+        }
+
+        setError(failure);
+        setStatus('error');
+        options.onError?.(failure);
+      }
+    };
+
+    await attempt(live, false);
+  }, [apiBase, init, openGate, options, tracker, wirePayload]);
+
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>): void => {
+      event.preventDefault();
+      void submit();
+    },
+    [submit],
+  );
+
+  const reset = useCallback((): void => {
+    setValues(initialValues(fields));
+    setErrors({});
+    setSuccess(null);
+    setError(null);
+    setSession(null);
+    tracker.reset();
+    setStatus('idle');
+  }, [fields, tracker]);
+
+  // -----------------------------------------------
+  // register() - bind an input to a field
+  // -----------------------------------------------
+
+  const register = useCallback(
+    (name: string, registerOptions: RegisterOptions = {}): FieldProps => {
+      const type = wireMap[name] ?? 'text';
+      const current = valuesRef.current[name];
+      const option = registerOptions.value ?? 'on';
+
+      const onChange = (event: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>): void => {
+        const target = event.target;
+        if (type === 'checkbox') {
+          const selected = new Set(Array.isArray(current) ? current : []);
+          if ((target as HTMLInputElement).checked) {
+            selected.add(option);
+          } else {
+            selected.delete(option);
+          }
+          setValue(name, [...selected]);
+
+          return;
+        }
+        if (type === 'select-multiple') {
+          const picked = Array.from((target as HTMLSelectElement).selectedOptions).map((o) => o.value);
+          setValue(name, picked);
+
+          return;
+        }
+        setValue(name, target.value);
+      };
+
+      const bound: FieldProps = {
+        name,
+        onChange,
+        onFocus: () => {
+          tracker.focus(name);
+          openGate('focus');
+        },
+        onBlur: () => scheduleBlurValidation(name),
+        onKeyDown: () => {
+          tracker.keystroke();
+          openGate('keydown');
+        },
+        'aria-invalid': errors[name] ? true : undefined,
+      };
+
+      if (type === 'checkbox') {
+        bound.value = option;
+        bound.checked = Array.isArray(current) && current.includes(option);
+      } else if (type === 'radio') {
+        bound.value = option;
+        bound.checked = current === option;
+      } else if (type === 'select-multiple') {
+        bound.value = Array.isArray(current) ? current : [];
+        bound.multiple = true;
+      } else {
+        bound.value = typeof current === 'string' ? current : '';
+      }
+
+      return bound;
+    },
+    [errors, openGate, scheduleBlurValidation, setValue, tracker, wireMap],
+  );
+
+  // -----------------------------------------------
+  // Props bundles
+  // -----------------------------------------------
+
+  const formProps: FormProps = useMemo(
+    () => ({
+      ref: formRef,
+      noValidate: true,
+      onSubmit: handleSubmit,
+      onFocusCapture: () => openGate('focus'),
+      onClickCapture: () => openGate('click'),
+      onKeyDownCapture: () => openGate('keydown'),
+      onTouchStartCapture: () => openGate('touch'),
+    }),
+    [handleSubmit, openGate],
+  );
+
+  const honeypotProps: HoneypotProps | null = useMemo(() => {
+    if (!session?.honeypot) {
+      return null;
+    }
+
+    return {
+      name: session.honeypot,
+      value: '',
+      tabIndex: -1,
+      autoComplete: 'off',
+      'aria-hidden': true,
+      readOnly: true,
+      style: { position: 'absolute', left: '-10000px', width: 1, height: 1, opacity: 0, overflow: 'hidden' },
+    };
+  }, [session?.honeypot]);
+
+  const fieldError = useCallback((name: string): string | undefined => errors[name]?.[0], [errors]);
+
+  return {
+    status,
+    values,
+    errors,
+    fatal,
+    error,
+    success,
+    branding: session?.branding ?? null,
+    isSubmitting: status === 'submitting',
+    isReady: status === 'ready',
+    register,
+    setValue,
+    fieldError,
+    submit,
+    handleSubmit,
+    validate,
+    reset,
+    formProps,
+    honeypotProps,
+  };
+};
+
+// -----------------------------------------------
+// Helpers
+// -----------------------------------------------
+
+const initialValues = (fields: Fields): Record<string, FieldValue> => {
+  const values: Record<string, FieldValue> = {};
+  for (const [name, config] of Object.entries(fields)) {
+    if (config.initial !== undefined) {
+      values[name] = config.initial;
+    } else {
+      values[name] = config.type === 'checkbox' || config.type === 'select-multiple' ? [] : '';
+    }
+  }
+
+  return values;
+};
