@@ -1,6 +1,6 @@
 {
   "name": "@snipform/react-forms",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React hooks + components for SnipForm forms: server-validated, spam-protected, headless.",
   "license": "MIT",
   "type": "module",
