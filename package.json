@@ -1,5 +1,5 @@
 {
-  "name": "@snipform/react",
+  "name": "@snipform/react-forms",
   "version": "0.1.0",
   "description": "React hooks + components for SnipForm forms: server-validated, spam-protected, headless.",
   "license": "MIT",
@@ -29,13 +29,14 @@
     "spam"
   ],
   "author": "SnipForm",
-  "homepage": "https://snipform.io",
+  "homepage": "https://docs.snipform.io/forms/react/",
   "repository": {
     "type": "git",
-    "url": "https://github.com/snipform/snipform-react"
+    "url": "git+https://github.com/SnipForm/react-forms.git"
   },
   "scripts": {
     "build": "vite build && tsc -p tsconfig.build.json",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
@@ -54,5 +55,11 @@
     "typescript": "^5.6.0",
     "vite": "^6.0.0",
     "vitest": "^3.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/SnipForm/react-forms/issues"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

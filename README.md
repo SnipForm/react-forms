@@ -1,15 +1,15 @@
-# @snipform/react
+# @snipform/react-forms
 
 React hooks and components for [SnipForm](https://snipform.io) forms. Server-validated, spam-protected, headless - your markup, your styling, SnipForm's backend.
 
 ```bash
-npm install @snipform/react
+npm install @snipform/react-forms
 ```
 
 ## Quick start
 
 ```tsx
-import { useSnipForm, SnipForm, FieldError } from '@snipform/react';
+import { useSnipForm, SnipForm, FieldError } from '@snipform/react-forms';
 
 export function ContactForm() {
   const form = useSnipForm({
