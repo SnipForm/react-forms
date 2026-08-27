@@ -173,7 +173,7 @@ The `validate` prop accepts the same three shapes as the Astro package:
 
 `null` as a message means "use the server's default". Validation always runs on the server — the same 34 Laravel rules the dashboard documents. Nothing is duplicated client-side, so client and server can't disagree.
 
-**Rules:** `required` `email` `url` `active_url` `boolean` `accepted` `numeric` `integer` `alpha` `alpha_num` `alpha_dash` `date` `ip` `ipv4` `ipv6` `uuid` `regex` `not_regex` and parameterised `max[n]` `min[n]` `between[n,m]` `min_length[n]` `max_length[n]` `starts_with[s]` `doesnt_start_with[s]` `doesnt_end_with[s]` `in[a,b,c]` `not_in[a,b,c]` `after[date]` `before[date]` `date_equals[date]` `same[field]` `gt[field]` `gte[field]` `lt[field]` `lte[field]`.
+**Rules:** `required` `email` `url` `active_url` `boolean` `accepted` `numeric` `integer` `alpha` `alpha_num` `alpha_dash` `date` `ip` `ipv4` `ipv6` `uuid` `regex` `not_regex` and parameterised `max[n]` `min[n]` `min_length[n]` `max_length[n]` `starts_with[s]` `doesnt_start_with[s]` `doesnt_end_with[s]` `in[a,b,c]` `not_in[a,b,c]` `after[date]` `before[date]` `date_equals[date]` `same[field]` `gt[field]` `gte[field]` `lt[field]` `lte[field]`.
 
 ### Validation on blur
 
