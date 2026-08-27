@@ -48,6 +48,11 @@ describe('declarative components', () => {
     </SnipForm>
   );
 
+  const fillRequired = () => {
+    fireEvent.change(screen.getByLabelText('email'), { target: { value: 'jane@acme.com' } });
+    fireEvent.change(screen.getByLabelText('message'), { target: { value: 'Hello from the tests' } });
+  };
+
   it('registers mounted fields and initialises with their types and rules', async () => {
     vi.mocked(fetch).mockResolvedValue(initOk());
     render(<Demo />);
@@ -64,10 +69,9 @@ describe('declarative components', () => {
     });
   });
 
-  it('shows the auto error message and error class after a failed submit, then swaps to success content', async () => {
+  it('blocks an invalid submit client-side with no network, then swaps to success content', async () => {
     vi.mocked(fetch)
       .mockResolvedValueOnce(initOk())
-      .mockResolvedValueOnce(jsonResponse({ validated: false, errors: { email: ['Email is required'] } }))
       .mockResolvedValueOnce(jsonResponse({ validated: true, ty: '<p>Thanks jane</p>' }));
     render(<Demo />);
 
@@ -76,13 +80,17 @@ describe('declarative components', () => {
     await waitFor(() => expect(requestsTo('/init')).toHaveLength(1));
 
     fireEvent.submit(screen.getByTestId('form'));
-    await waitFor(() => expect(screen.getByRole('alert').textContent).toBe('Email is required'));
+    await waitFor(() => expect(screen.getAllByRole('alert')[0].textContent).toBe('Email is required'));
     expect(screen.getByLabelText('email').className).toContain('is-error');
+    // Caught in the browser - the submit never left.
+    expect(requestsTo('/process')).toHaveLength(0);
 
     fireEvent.change(email, { target: { value: 'jane@acme.com' } });
+    fireEvent.change(screen.getByLabelText('message'), { target: { value: 'Hello from the tests' } });
     fireEvent.submit(screen.getByTestId('form'));
 
     await waitFor(() => expect(screen.getByTestId('form').innerHTML).toContain('Thanks jane'));
+    expect(requestsTo('/process')).toHaveLength(1);
     // The field components and submit button hide themselves on success.
     expect(screen.queryByLabelText('email')).toBeNull();
     expect(screen.queryByRole('button')).toBeNull();
@@ -116,6 +124,7 @@ describe('declarative components', () => {
     // No eager re-init - staleness resolves lazily.
     expect(requestsTo('/init')).toHaveLength(1);
 
+    fillRequired();
     fireEvent.submit(screen.getByTestId('form'));
     await waitFor(() => expect(requestsTo('/process')).toHaveLength(1));
 
@@ -152,6 +161,7 @@ describe('declarative components', () => {
     fireEvent.click(screen.getByText('show phone'));
     await screen.findByLabelText('phone');
 
+    fillRequired();
     fireEvent.submit(screen.getByTestId('form'));
     await waitFor(() => expect(requestsTo('/process')).toHaveLength(1));
 
@@ -185,6 +195,7 @@ describe('declarative components', () => {
     expect(bodyOf(requestsTo('/init')[0]).fields.phone).toBe('tel');
 
     fireEvent.click(screen.getByText('drop phone'));
+    fillRequired();
     fireEvent.submit(screen.getByTestId('form'));
     await waitFor(() => expect(requestsTo('/process')).toHaveLength(1));
 

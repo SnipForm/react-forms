@@ -25,7 +25,15 @@ export const SnipFormProvider = ({ children, ...config }: SnipFormProviderProps)
   const value = useMemo(
     () => config,
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [config.apiBase, config.validateOn, config.initOn, config.onSuccess, config.onValidationError, config.onError],
+    [
+      config.apiBase,
+      config.validateOn,
+      config.clientValidate,
+      config.initOn,
+      config.onSuccess,
+      config.onValidationError,
+      config.onError,
+    ],
   );
 
   return <ConfigContext.Provider value={value}>{children}</ConfigContext.Provider>;

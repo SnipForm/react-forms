@@ -54,14 +54,26 @@ export const SnipForm = (props: SnipFormProps) => {
     );
   }
 
-  const { formKey, fields, validateOn, initOn, apiBase, onSuccess, onValidationError, onError, children, ...rest } =
-    props as ManagedSnipFormProps;
+  const {
+    formKey,
+    fields,
+    validateOn,
+    clientValidate,
+    initOn,
+    apiBase,
+    onSuccess,
+    onValidationError,
+    onError,
+    children,
+    ...rest
+  } = props as ManagedSnipFormProps;
 
   return (
     <ManagedForm
       formKey={formKey}
       fields={fields}
       validateOn={validateOn}
+      clientValidate={clientValidate}
       initOn={initOn}
       apiBase={apiBase}
       onSuccess={onSuccess}
@@ -98,6 +110,7 @@ const ManagedForm = ({ formKey, fields, formAttributes, children, ...config }: M
     key: formKey,
     fields,
     validateOn: config.validateOn ?? defaults.validateOn,
+    clientValidate: config.clientValidate ?? defaults.clientValidate,
     initOn: config.initOn ?? defaults.initOn,
     apiBase: config.apiBase ?? defaults.apiBase,
     onSuccess: config.onSuccess ?? defaults.onSuccess,

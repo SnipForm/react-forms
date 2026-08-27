@@ -12,6 +12,8 @@ export {
 } from './components';
 export { Field, Input, Select, Textarea } from './fields';
 export { normalizeValidate } from './validate';
+export { clientValidateFields, isClientRule, parseRules, validateFieldValue, SERVER_ONLY_RULES } from './rules';
+export type { ParsedRule } from './rules';
 export { signFor } from './signature';
 export { SnipFormError } from './types';
 export type { SnipFormProps } from './components';

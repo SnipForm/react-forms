@@ -69,6 +69,14 @@ export type ErrorKind = 'fatal' | 'expired' | 'unauthorized' | 'network' | 'serv
 export interface SnipFormConfig {
   /** `submit` (default): errors arrive on submit. `blur`: each field is validated server-side as it's left. */
   validateOn?: 'submit' | 'blur';
+  /**
+   * Client-side validation (default: true): rules are also checked in the
+   * browser - instantly on blur and before submit - from the same
+   * declarations the server reads. Rules the browser can't run
+   * (active_url, regex, not_regex) are left to the server, which always
+   * re-validates on submit. Set false for server-only validation.
+   */
+  clientValidate?: boolean;
   /** `interaction` (default): initialise on the first human touch. `mount`: initialise immediately (scored as bot-like; avoid). */
   initOn?: 'interaction' | 'mount';
   /** Override the API base. Defaults to https://api.snipform.io/v2 */

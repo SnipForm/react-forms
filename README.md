@@ -53,7 +53,8 @@ The form container: renders a `<form>` wired with submit handling, the human gat
 | --- | --- | --- |
 | `formKey` | `string` | Your form's key from the SnipForm dashboard |
 | `fields` | `Fields` | Optional upfront field declarations (children register themselves) |
-| `validateOn` | `'submit' \| 'blur'` | `blur` validates each field server-side as it's left |
+| `validateOn` | `'submit' \| 'blur'` | `blur` also validates each field server-side as it's left |
+| `clientValidate` | `boolean` | Instant in-browser rule checks on blur + before submit (default: `true`) |
 | `initOn` | `'interaction' \| 'mount'` | When the session opens (default: first human interaction — keep it) |
 | `apiBase` | `string` | Override the API base |
 | `onSuccess` / `onValidationError` / `onError` | callbacks | |
@@ -171,17 +172,29 @@ The `validate` prop accepts the same three shapes as the Astro package:
 <Input name="age" validate={{ required: 'Required', 'between[18,99]': 'Must be 18-99' }} />
 ```
 
-`null` as a message means "use the server's default". Validation always runs on the server — the same 34 Laravel rules the dashboard documents. Nothing is duplicated client-side, so client and server can't disagree.
+`null` as a message means "use the server's default". Validation always runs on the server on submit — the same Laravel rules the dashboard documents.
 
 **Rules:** `required` `email` `url` `active_url` `boolean` `accepted` `numeric` `integer` `alpha` `alpha_num` `alpha_dash` `date` `ip` `ipv4` `ipv6` `uuid` `regex` `not_regex` and parameterised `max[n]` `min[n]` `min_length[n]` `max_length[n]` `starts_with[s]` `doesnt_start_with[s]` `doesnt_end_with[s]` `in[a,b,c]` `not_in[a,b,c]` `after[date]` `before[date]` `date_equals[date]` `same[field]` `gt[field]` `gte[field]` `lt[field]` `lte[field]`.
 
-### Validation on blur
+### Client-side validation
+
+Rules are also checked in the browser — instantly on blur and before submit — so visitors get feedback without a network round trip. There is nothing to configure and no second schema to maintain: the same rule declarations the server reads are interpreted client-side, and errors land in the same error bag, so client and server errors look identical. An invalid form never leaves the browser; a valid one is still fully re-validated by the server on submit — client-side validation is a UX layer, not a security boundary.
+
+Rules that can't run in the browser (`active_url` needs a DNS lookup; `regex` / `not_regex` use PHP regex semantics) are skipped client-side and enforced by the server.
+
+To disable it for a form (or globally on the provider):
+
+```tsx
+<SnipForm formKey="..." clientValidate={false}>
+```
+
+### Server validation on blur
 
 ```tsx
 <SnipForm formKey="..." validateOn="blur">
 ```
 
-Each field is validated by the server as the visitor leaves it (debounced 250ms), through a validate-only endpoint that consumes nothing. Only the blurred field's messages land, so untouched fields don't light up. Submit still validates everything.
+On top of the instant client checks, each field can also be validated by the *server* as it's left (debounced 250ms), through a validate-only endpoint that consumes nothing — useful when server-only rules should light up before submit. Only the blurred field's messages land, so untouched fields don't light up. Submit still validates everything.
 
 ## Conditional fields
 
@@ -201,7 +214,7 @@ The server freezes a session's field set at init (an anti-spam boundary). Two wa
 
 1. **Idle until a human shows up.** The form sits idle until the visitor focuses, clicks, types, touches, or scrolls it into view. That first interaction opens the session. (`initOn: 'mount'` initialises eagerly but is scored as bot-like — avoid.)
 2. **Fields declare themselves.** Each `<Field>` registers its name, type, and rules on mount; the session opens with exactly that set. Changes after init are handled by the stale-session swap above.
-3. **Validation is the server's.** Nothing is duplicated client-side.
+3. **Validation is the server's; the browser previews it.** Client checks run from the same declarations for instant feedback, and the server re-validates everything on submit — the two can't disagree.
 4. **Submit** posts values, the (empty) honeypot, and behavioural signals. Success returns the thank-you HTML; validation failure returns per-field messages (all of them) and keeps the session open.
 
 ### Spam protection, preserved

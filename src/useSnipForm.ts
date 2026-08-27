@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { DEFAULT_API_BASE, initSession, submitSession, validateSession } from './api';
 import { InteractionTracker } from './behavior';
+import { clientValidateFields } from './rules';
 import { SnipFormError } from './types';
 import type {
   FieldConfig,
@@ -52,6 +53,7 @@ const BLUR_VALIDATE_DELAY_MS = 250;
  */
 export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
   const apiBase = options.apiBase ?? DEFAULT_API_BASE;
+  const clientValidate = options.clientValidate ?? true;
 
   const [values, setValues] = useState<Record<string, FieldValue>>(() => initialValues(options.fields ?? {}));
   const [errors, setErrors] = useState<FieldErrors>({});
@@ -344,6 +346,30 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
     [options.validateOn, validate],
   );
 
+  /**
+   * Instant, local check of one field's rules on blur - no network. The
+   * same rule declarations the server reads, so they can't disagree; rules
+   * the browser can't run (active_url, regex, not_regex) are left to the
+   * server. Disable with clientValidate: false.
+   */
+  const clientCheckField = useCallback(
+    (name: string): void => {
+      const found = clientValidateFields(registryRef.current, valuesRef.current, name);
+      setErrors((current) => {
+        const next = { ...current };
+        if (found[name]) {
+          next[name] = found[name];
+        } else {
+          delete next[name];
+        }
+
+        return next;
+      });
+      markValidated(name);
+    },
+    [markValidated],
+  );
+
   // -----------------------------------------------
   // Submit
   // -----------------------------------------------
@@ -353,6 +379,19 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
       return;
     }
     openGate('click');
+
+    // Client-side gate: catch what the browser can catch before any network.
+    // The server still re-validates everything that gets through.
+    if (clientValidate) {
+      const found = clientValidateFields(registryRef.current, valuesRef.current);
+      if (Object.keys(found).length > 0) {
+        setErrors(found);
+        markValidated();
+        options.onValidationError?.(found);
+
+        return;
+      }
+    }
 
     let live = await freshSession();
     if (!live) {
@@ -400,7 +439,7 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
     };
 
     await attempt(live, false);
-  }, [apiBase, freshSession, init, markValidated, openGate, options, tracker, wirePayload]);
+  }, [apiBase, clientValidate, freshSession, init, markValidated, openGate, options, tracker, wirePayload]);
 
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>): void => {
@@ -460,7 +499,12 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
           tracker.focus(name);
           openGate('focus');
         },
-        onBlur: () => scheduleBlurValidation(name),
+        onBlur: () => {
+          if (clientValidate) {
+            clientCheckField(name);
+          }
+          scheduleBlurValidation(name);
+        },
         onKeyDown: () => {
           tracker.keystroke();
           openGate('keydown');
@@ -483,7 +527,7 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
 
       return bound;
     },
-    [errors, openGate, scheduleBlurValidation, setValue, tracker, wireMap],
+    [clientCheckField, clientValidate, errors, openGate, scheduleBlurValidation, setValue, tracker, wireMap],
   );
 
   // -----------------------------------------------
