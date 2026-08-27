@@ -29,6 +29,16 @@ export type FieldType =
  */
 export type RuleMessages = Record<string, string | null>;
 
+/**
+ * What the `validate` prop on declarative components accepts - the same three
+ * shapes as @snipform/astro-forms:
+ *
+ *   validate="required"
+ *   validate={['required', 'integer']}
+ *   validate={{ required: 'Name is required', 'min_length[2]': null }}
+ */
+export type ValidateProp = string | string[] | RuleMessages;
+
 export type FieldValue = string | string[];
 
 export interface FieldConfig {
@@ -55,13 +65,18 @@ export interface SubmitSuccess {
 
 export type ErrorKind = 'fatal' | 'expired' | 'unauthorized' | 'network' | 'server';
 
-export interface SnipFormOptions {
-  /** The form key from the SnipForm dashboard. */
-  key: string;
-  /** Every field the form will ever submit - the set is frozen once the session initialises. */
-  fields: Fields;
+/** Shared form configuration - accepted by the hook, by `<SnipForm formKey>`, and app-wide by `<SnipFormProvider>`. */
+export interface SnipFormConfig {
   /** `submit` (default): errors arrive on submit. `blur`: each field is validated server-side as it's left. */
   validateOn?: 'submit' | 'blur';
+  /**
+   * Client-side validation (default: true): rules are also checked in the
+   * browser - instantly on blur and before submit - from the same
+   * declarations the server reads. Rules the browser can't run
+   * (active_url, regex, not_regex) are left to the server, which always
+   * re-validates on submit. Set false for server-only validation.
+   */
+  clientValidate?: boolean;
   /** `interaction` (default): initialise on the first human touch. `mount`: initialise immediately (scored as bot-like; avoid). */
   initOn?: 'interaction' | 'mount';
   /** Override the API base. Defaults to https://api.snipform.io/v2 */
@@ -69,6 +84,18 @@ export interface SnipFormOptions {
   onSuccess?: (result: SubmitSuccess) => void;
   onValidationError?: (errors: FieldErrors) => void;
   onError?: (error: SnipFormError) => void;
+}
+
+export interface SnipFormOptions extends SnipFormConfig {
+  /** The form key from the SnipForm dashboard. */
+  key: string;
+  /**
+   * Fields declared up front. Optional - declarative components register
+   * their own fields on mount. A change to the field set after the session
+   * has opened marks the session stale; it is transparently re-initialised
+   * on the next submit or validation.
+   */
+  fields?: Fields;
 }
 
 export interface Branding {
@@ -140,6 +167,16 @@ export interface SnipFormHandle {
   register: (name: string, options?: RegisterOptions) => FieldProps;
   setValue: (name: string, value: FieldValue) => void;
   fieldError: (name: string) => string | undefined;
+  /** True once the field has been server-validated (blur or submit) and has no errors. */
+  fieldValid: (name: string) => boolean;
+  /**
+   * Add a field to the form's set. Called by the declarative components on
+   * mount; safe at any time - a change after the session opened makes the
+   * session stale and it is re-initialised transparently.
+   */
+  registerField: (name: string, config?: FieldConfig) => void;
+  /** Remove a field from the set (and its value/errors). Same staleness rules as registerField. */
+  unregisterField: (name: string) => void;
   submit: () => Promise<void>;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
   validate: (field?: string) => Promise<FieldErrors>;

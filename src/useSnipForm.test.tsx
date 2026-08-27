@@ -80,9 +80,12 @@ describe('useSnipForm', () => {
       .mockResolvedValueOnce(jsonResponse({ validated: false, errors: { email: ['Email is required'] } }));
     render(<Demo />);
 
-    fireEvent.focus(screen.getByLabelText('email'));
+    const email = screen.getByLabelText('email');
+    fireEvent.focus(email);
     await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('ready'));
 
+    // Client-valid so the submit reaches the server, which rejects it anyway.
+    fireEvent.change(email, { target: { value: 'jane@acme.com' } });
     fireEvent.submit(screen.getByTestId('form'));
 
     await waitFor(() => expect(screen.getByRole('alert').textContent).toBe('Email is required'));
@@ -127,8 +130,10 @@ describe('useSnipForm', () => {
       .mockResolvedValueOnce(jsonResponse({ validated: true, ty: '<p>Done</p>' }));
     render(<Demo />);
 
-    fireEvent.focus(screen.getByLabelText('email'));
+    const email = screen.getByLabelText('email');
+    fireEvent.focus(email);
     await waitFor(() => expect(screen.getByTestId('status').textContent).toBe('ready'));
+    fireEvent.change(email, { target: { value: 'jane@acme.com' } });
     fireEvent.submit(screen.getByTestId('form'));
 
     await waitFor(() => expect(screen.getByTestId('success')).toBeTruthy());
