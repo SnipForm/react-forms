@@ -174,7 +174,23 @@ The `validate` prop accepts the same three shapes as the Astro package:
 
 `null` as a message means "use the server's default". Validation always runs on the server on submit — the same Laravel rules the dashboard documents.
 
-**Rules:** `required` `email` `url` `active_url` `boolean` `accepted` `numeric` `integer` `alpha` `alpha_num` `alpha_dash` `date` `ip` `ipv4` `ipv6` `uuid` `regex` `not_regex` and parameterised `max[n]` `min[n]` `min_length[n]` `max_length[n]` `starts_with[s]` `doesnt_start_with[s]` `doesnt_end_with[s]` `in[a,b,c]` `not_in[a,b,c]` `after[date]` `before[date]` `date_equals[date]` `same[field]` `gt[field]` `gte[field]` `lt[field]` `lte[field]`.
+**Rules:** `required` `email` `url` `active_url` `boolean` `accepted` `numeric` `integer` `alpha` `alpha_num` `alpha_dash` `date` `ip` `ipv4` `ipv6` `uuid` `phone` `regex` `not_regex` and parameterised `max[n]` `min[n]` `min_length[n]` `max_length[n]` `starts_with[s]` `doesnt_start_with[s]` `doesnt_end_with[s]` `in[a,b,c]` `not_in[a,b,c]` `after[date]` `before[date]` `date_equals[date]` `same[field]` `gt[field]` `gte[field]` `lt[field]` `lte[field]` `phone[options]`.
+
+**Phone numbers:** `phone` checks real numbers against Google's numbering data (libphonenumber), on the server and in the browser.
+
+```tsx
+<Field name="phone" type="tel" validate={{ phone: 'Enter a valid number, starting with + and your country code' }} />
+<Field name="phone" type="tel" validate={{ 'phone[za]': 'Enter a South African number' }} />
+```
+
+- `phone`: any country, written internationally (`+27 82 123 4567`).
+- `phone[za]`, `phone[za,gb]`: only these countries; local numbers (`082 123 4567`) are read as them.
+- `phone[international,za]`: local South African numbers, or any international one.
+- `phone[mobile]`, `phone[!mobile]`: allow or block a number type (`fixed_line`, `toll_free`, `voip`, ...).
+- `phone[lenient]`: check the length only, not the number ranges.
+- A field named `phone_country` (the phone field's name + `_country`) sets the country, or name another field: `phone[country]`.
+
+The browser check loads libphonenumber-js (~50 KB gzipped) the first time a phone field gets focus; a submit waits for it if it hasn't loaded yet.
 
 ### Client-side validation
 

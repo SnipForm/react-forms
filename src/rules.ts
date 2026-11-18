@@ -1,3 +1,4 @@
+import { checkPhone, phoneParser } from './phone';
 import type { FieldErrors, FieldValue, Fields, RuleMessages } from './types';
 
 /**
@@ -9,7 +10,8 @@ import type { FieldErrors, FieldValue, Fields, RuleMessages } from './types';
  * The server remains the authority: it re-validates everything on submit,
  * and rules that cannot run in the browser (`active_url` needs a DNS
  * lookup; `regex` / `not_regex` are applied with PHP regex semantics) are
- * skipped here and enforced there.
+ * skipped here and enforced there. `phone` runs here once libphonenumber-js
+ * has loaded (see phone.ts); until then it is left to the server.
  */
 
 /** A parsed `rule[param]` key from a RuleMessages map */
@@ -116,7 +118,7 @@ const compareFields = (
 
 const inList = (param: string): string[] => param.split(',').map((entry) => entry.trim());
 
-type RuleCheck = (value: string, param: string, values: Record<string, FieldValue>) => boolean;
+type RuleCheck = (value: string, param: string, values: Record<string, FieldValue>, field: string) => boolean;
 
 /**
  * Each check returns true when the value passes. Empty values are handled
@@ -147,6 +149,11 @@ const CHECKS: Record<string, RuleCheck> = {
   ipv4: (v) => IPV4.test(v.trim()),
   ipv6: (v) => IPV6.test(v.trim()),
   date: (v) => parseDate(v) !== null,
+  phone: (v, p, values, field) => {
+    const parse = phoneParser();
+
+    return parse ? checkPhone(parse, v, p || null, field, values) : true;
+  },
 
   max: (v, p) => NUMERIC.test(v.trim()) && Number.parseFloat(v) <= Number.parseFloat(p),
   min: (v, p) => NUMERIC.test(v.trim()) && Number.parseFloat(v) >= Number.parseFloat(p),
@@ -189,6 +196,7 @@ const MESSAGES: Record<string, (field: string, param: string) => string> = {
   ipv4: (f) => `The ${f} field must be a valid IPv4 address.`,
   ipv6: (f) => `The ${f} field must be a valid IPv6 address.`,
   date: (f) => `The ${f} field must be a valid date.`,
+  phone: (f) => `The ${f} field must be a valid phone number.`,
   max: (f, p) => `The ${f} field must not be greater than ${p}.`,
   min: (f, p) => `The ${f} field must be at least ${p}.`,
   min_length: (f, p) => `The ${f} field must be at least ${p} characters.`,
@@ -246,8 +254,8 @@ export const validateFieldValue = (
     const items = Array.isArray(value) ? value : [value];
     const passes =
       rule.name === 'accepted'
-        ? check(asString(Array.isArray(value) ? value[0] : value), '', values)
-        : items.every((item) => check(item, rule.param ?? '', values));
+        ? check(asString(Array.isArray(value) ? value[0] : value), '', values, field)
+        : items.every((item) => check(item, rule.param ?? '', values, field));
 
     if (!passes) return rule.message ?? defaultMessage(rule, field);
   }
@@ -277,3 +285,7 @@ export const clientValidateFields = (
 
   return errors;
 };
+
+/** True if any of the field's rules is `phone` / `phone[...]`. */
+export const hasPhoneRule = (rules?: RuleMessages): boolean =>
+  rules !== undefined && Object.keys(rules).some((key) => /^phone(\[|$)/.test(key));

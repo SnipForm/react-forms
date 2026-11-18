@@ -2,7 +2,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 import { DEFAULT_API_BASE, initSession, submitSession, validateSession } from './api';
 import { InteractionTracker } from './behavior';
-import { clientValidateFields } from './rules';
+import { loadPhoneParser, phoneSettled } from './phone';
+import { clientValidateFields, hasPhoneRule } from './rules';
 import { SnipFormError } from './types';
 import type {
   FieldConfig,
@@ -383,6 +384,10 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
     // Client-side gate: catch what the browser can catch before any network.
     // The server still re-validates everything that gets through.
     if (clientValidate) {
+      // `phone` needs libphonenumber-js, loaded on demand: wait for it.
+      if (!phoneSettled() && Object.values(registryRef.current).some((field) => hasPhoneRule(field.rules))) {
+        await loadPhoneParser();
+      }
       const found = clientValidateFields(registryRef.current, valuesRef.current);
       if (Object.keys(found).length > 0) {
         setErrors(found);
@@ -498,10 +503,17 @@ export const useSnipForm = (options: SnipFormOptions): SnipFormHandle => {
         onFocus: () => {
           tracker.focus(name);
           openGate('focus');
+          if (clientValidate && !phoneSettled() && hasPhoneRule(registryRef.current[name]?.rules)) {
+            void loadPhoneParser();
+          }
         },
         onBlur: () => {
           if (clientValidate) {
-            clientCheckField(name);
+            if (!phoneSettled() && hasPhoneRule(registryRef.current[name]?.rules)) {
+              void loadPhoneParser().then(() => clientCheckField(name));
+            } else {
+              clientCheckField(name);
+            }
           }
           scheduleBlurValidation(name);
         },

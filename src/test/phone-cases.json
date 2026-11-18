@@ -1,0 +1,2149 @@
+{
+  "_about": "Answers from SnipForm's server (propaganistas/laravel-phone 6.1, libphonenumber-for-php-lite 9.0.43) for sf-validate:phone[param]. The client check must agree with every case.",
+  "cases": [
+    {
+      "param": null,
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+44 7911 123456",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+47 412 34 567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+234 803 123 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "011 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "011 123 4567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "ZA",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "ZA",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "011 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+44 7911 123456",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+47 412 34 567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+234 803 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "international,za",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "international,za",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "011 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "020 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "za,gb",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "za,gb",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "us",
+      "value": "+27 82 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27821234567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27 82 123 456",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27 11 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "us",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "(212) 555-0123",
+      "valid": true
+    },
+    {
+      "param": "us",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27 82 abc 4567",
+      "valid": false
+    },
+    {
+      "param": "us",
+      "value": "+27 800 123 456",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+27 11 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+44 7911 123456",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+47 412 34 567",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+234 803 123 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "mobile",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile",
+      "value": "+27 800 123 456",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 82 123 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27821234567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 82 123 456",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "fixed_line",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "fixed_line",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "fixed_line",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": "fixed_line",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 82 abc 4567",
+      "valid": false
+    },
+    {
+      "param": "fixed_line",
+      "value": "+27 800 123 456",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 82 123 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27821234567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 82 123 456",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "!mobile",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "!mobile",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": "!mobile",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": "!mobile",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 82 abc 4567",
+      "valid": false
+    },
+    {
+      "param": "!mobile",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 11 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "mobile,za",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "mobile,za",
+      "value": "+27 800 123 456",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 123 45678",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+44 7911 123456",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+44 7700 900123",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+1 555 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+47 412 34 567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+234 803 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 82 123 45678",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "082 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "0821234567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "011 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "020 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "07911 123456",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "(212) 555-0123",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+800 1234 5678",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "lenient,za",
+      "value": "27821234567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient,za",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 82 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27821234567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 82 123 456",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 11 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+44 20 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+44 7911 123456",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+1 212 555 0123",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+47 412 34 567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+49 30 123456",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+234 803 123 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": "toll_free",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 82 abc 4567",
+      "valid": false
+    },
+    {
+      "param": "toll_free",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+27821234567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+27 82 123 45678",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+27 82 123 456",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "082 123 4567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "0821234567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+27 11 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "011 123 4567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+44 20 7946 0958",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "020 7946 0958",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+44 7911 123456",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "07911 123456",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+44 7700 900123",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+1 212 555 0123",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+1 555 123 4567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "(212) 555-0123",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+47 412 34 567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+49 30 123456",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+234 803 123 4567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+800 1234 5678",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+999 1234567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+27",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "asdf",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "27821234567",
+      "valid": false
+    },
+    {
+      "param": "international",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "international",
+      "value": "+27 800 123 456",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "082 123 4567",
+      "valid": true,
+      "values": {
+        "phone_country": "ZA"
+      }
+    },
+    {
+      "param": "where",
+      "value": "082 123 4567",
+      "valid": true,
+      "values": {
+        "where": "ZA"
+      }
+    },
+    {
+      "param": null,
+      "value": "020 7946 0958",
+      "valid": false,
+      "values": {
+        "phone_country": "ZA"
+      }
+    },
+    {
+      "param": "where",
+      "value": "020 7946 0958",
+      "valid": false,
+      "values": {
+        "where": "ZA"
+      }
+    },
+    {
+      "param": null,
+      "value": "+44 20 7946 0958",
+      "valid": false,
+      "values": {
+        "phone_country": "ZA"
+      }
+    },
+    {
+      "param": "where",
+      "value": "+44 20 7946 0958",
+      "valid": false,
+      "values": {
+        "where": "ZA"
+      }
+    },
+    {
+      "param": null,
+      "value": "082 123 4567",
+      "valid": false,
+      "values": {
+        "phone_country": "GB"
+      }
+    },
+    {
+      "param": "where",
+      "value": "082 123 4567",
+      "valid": false,
+      "values": {
+        "where": "GB"
+      }
+    },
+    {
+      "param": null,
+      "value": "020 7946 0958",
+      "valid": true,
+      "values": {
+        "phone_country": "GB"
+      }
+    },
+    {
+      "param": "where",
+      "value": "020 7946 0958",
+      "valid": true,
+      "values": {
+        "where": "GB"
+      }
+    },
+    {
+      "param": null,
+      "value": "+44 20 7946 0958",
+      "valid": true,
+      "values": {
+        "phone_country": "GB"
+      }
+    },
+    {
+      "param": "where",
+      "value": "+44 20 7946 0958",
+      "valid": true,
+      "values": {
+        "where": "GB"
+      }
+    },
+    {
+      "param": null,
+      "value": "082 123 4567",
+      "valid": true,
+      "values": {
+        "phone_country": "za"
+      }
+    },
+    {
+      "param": "where",
+      "value": "082 123 4567",
+      "valid": true,
+      "values": {
+        "where": "za"
+      }
+    },
+    {
+      "param": null,
+      "value": "020 7946 0958",
+      "valid": false,
+      "values": {
+        "phone_country": "za"
+      }
+    },
+    {
+      "param": "where",
+      "value": "020 7946 0958",
+      "valid": false,
+      "values": {
+        "where": "za"
+      }
+    },
+    {
+      "param": null,
+      "value": "+44 20 7946 0958",
+      "valid": false,
+      "values": {
+        "phone_country": "za"
+      }
+    },
+    {
+      "param": "where",
+      "value": "+44 20 7946 0958",
+      "valid": false,
+      "values": {
+        "where": "za"
+      }
+    },
+    {
+      "param": null,
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 abc 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 82 1a3 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 1a3 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 1a3 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 82 12a 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 12a 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 12a 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+1 800 FLOWERS",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+1 800 FLOWERS",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+1 800 FLOWERS",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+1-800-flowers",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+1-800-flowers",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+1-800-flowers",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+1 800 356 9377",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+1 800 356 9377",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "+1 800 356 9377",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "0800 FLOWERS",
+      "valid": false
+    },
+    {
+      "param": "za",
+      "value": "0800 FLOWERS",
+      "valid": false
+    },
+    {
+      "param": "lenient",
+      "value": "0800 FLOWERS",
+      "valid": false
+    },
+    {
+      "param": null,
+      "value": "+27 82 ab3 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 ab3 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 ab3 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 82 abcd 456",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 abcd 456",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 abcd 456",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "tel: +27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "tel: +27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "tel: +27 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "+27 82 123 4567 ext 12",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "+27 82 123 4567 ext 12",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "+27 82 123 4567 ext 12",
+      "valid": true
+    },
+    {
+      "param": null,
+      "value": "(+27) 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "za",
+      "value": "(+27) 82 123 4567",
+      "valid": true
+    },
+    {
+      "param": "lenient",
+      "value": "(+27) 82 123 4567",
+      "valid": true
+    }
+  ]
+}

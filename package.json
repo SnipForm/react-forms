@@ -61,5 +61,8 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "dependencies": {
+    "libphonenumber-js": "^1.13.16"
   }
 }

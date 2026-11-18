@@ -8,8 +8,9 @@ export default defineConfig({
       fileName: (format) => (format === 'es' ? 'index.js' : 'index.cjs'),
     },
     rollupOptions: {
-      // React is a peer - never bundle it.
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      // React is a peer - never bundle it. libphonenumber-js is a dependency,
+      // loaded lazily by the phone rule.
+      external: ['react', 'react-dom', 'react/jsx-runtime', /^libphonenumber-js(\/|$)/],
     },
     sourcemap: true,
   },
